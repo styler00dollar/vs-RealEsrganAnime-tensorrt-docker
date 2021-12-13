@@ -20,4 +20,4 @@ vspipe --y4m inference.py - | ffmpeg -i pipe: example.mkv
 
 If you don't want to use docker, vapoursynth install commands are [here](https://github.com/styler00dollar/vs-vfi) and a TensorRT example is [here](https://github.com/styler00dollar/Colab-torch2trt/blob/main/Colab-torch2trt.ipynb).
 
-You can choose between the 4x and 2x model inside fo `inference.py`.
+You can choose between the 4x and 2x model inside of `inference.py`.
