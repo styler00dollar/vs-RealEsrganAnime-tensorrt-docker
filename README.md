@@ -18,6 +18,13 @@ docker run --privileged --gpus all -it --rm -v /home/Desktop/tensorrt:/workspace
 vspipe --y4m inference.py - | ffmpeg -i pipe: example.mkv
 ```
 
+If docker does not want to start, try this before you use docker:
+```
+# fixing docker errors
+systemctl start docker
+sudo chmod 666 /var/run/docker.sock
+```
+
 If you don't want to use docker, vapoursynth install commands are [here](https://github.com/styler00dollar/vs-vfi) and a TensorRT example is [here](https://github.com/styler00dollar/Colab-torch2trt/blob/main/Colab-torch2trt.ipynb).
 
 Set the input video path in `inference.py` and access videos with the mounted folder. You can also choose between the 4x and 2x model.
