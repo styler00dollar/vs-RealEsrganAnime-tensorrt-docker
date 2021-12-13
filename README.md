@@ -33,6 +33,8 @@ It is also possible to directly pipe the video into mpv. Change the mounted fold
 ```
 yay -S pulseaudio
 
+# i am not sure if it is needed, but go into pulseaudio settings and check "make pulseaudio network audio devices discoverable in the local network" and reboot
+
 # start docker
 docker run --rm -i -t \
     --network host \
@@ -41,7 +43,6 @@ docker run --rm -i -t \
     --ipc=host \
     --privileged \
     --gpus all \
-    -e PULSE_SERVER=tcp:$(hostname -i):4713 \
     -e PULSE_COOKIE=/run/pulse/cookie \
     -v ~/.config/pulse/cookie:/run/pulse/cookie \
     -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
