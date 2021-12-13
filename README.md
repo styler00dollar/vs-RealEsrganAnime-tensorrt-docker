@@ -28,3 +28,26 @@ sudo chmod 666 /var/run/docker.sock
 If you don't want to use docker, vapoursynth install commands are [here](https://github.com/styler00dollar/vs-vfi) and a TensorRT example is [here](https://github.com/styler00dollar/Colab-torch2trt/blob/main/Colab-torch2trt.ipynb).
 
 Set the input video path in `inference.py` and access videos with the mounted folder. You can also choose between the 4x and 2x model.
+
+It is also possible to directly pipe the video into mpv. Change the mounted folder path to your own videofolder and use the mpv dockerfile instead. Only tested in Manjaro.
+```
+yay -S pulseaudio
+
+# start docker
+docker run --rm -i -t \
+    --network host \
+    -e DISPLAY \
+    -v /home/Schreibtisch/test/:/home/mpv/media:ro \
+    --ipc=host \
+    --privileged \
+    --gpus all \
+    -e PULSE_SERVER=tcp:$(hostname -i):4713 \
+    -e PULSE_COOKIE=/run/pulse/cookie \
+    -v ~/.config/pulse/cookie:/run/pulse/cookie \
+    -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
+    -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
+    realsr_tensorrt:latest
+    
+# run mpv
+vspipe --y4m inference.py - | mpv -
+```
