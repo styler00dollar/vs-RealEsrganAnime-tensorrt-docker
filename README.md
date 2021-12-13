@@ -39,7 +39,7 @@ yay -S pulseaudio
 docker run --rm -i -t \
     --network host \
     -e DISPLAY \
-    -v /home/Schreibtisch/test/:/home/mpv/media:ro \
+    -v /home/Schreibtisch/test/:/home/mpv/media \
     --ipc=host \
     --privileged \
     --gpus all \
