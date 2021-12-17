@@ -75,8 +75,8 @@ def RealESRGAN(clip: vs.VideoNode, scale: int = 2, fp16: bool = False) -> vs.Vid
         raise vs.Error('RealESRGAN: scale must be 2 or 4')
     
     # load network
-    model_path = f'/workspace/RealESRGANv2-animevideo-xsx2.pth'
-    model = SRVGGNetCompact(num_in_ch=3, num_out_ch=3, num_feat=64, num_conv=16, upscale=2, act_type='prelu')
+    model_path = f'/workspace/RealESRGANv2-animevideo-xsx{scale}.pth'
+    model = SRVGGNetCompact(num_in_ch=3, num_out_ch=3, num_feat=64, num_conv=16, upscale=scale, act_type='prelu')
     model.load_state_dict(torch.load(model_path, map_location="cpu")['params'])
     model.eval()
     # export to onnx and load with tensorrt (you cant use https://github.com/NVIDIA/Torch-TensorRT because the scripting step will fail)
@@ -115,6 +115,7 @@ clip = core.ffms2.Source(source='input.webm')
 #clip = vs.core.resize.Bicubic(clip, format=vs.RGBS, matrix_in_s='709')
 # convert colorspace + resizing
 clip = vs.core.resize.Bicubic(clip, width=848, height=480, format=vs.RGBS, matrix_in_s='709')
-clip = RealESRGAN(clip, fp16=False)
+# add scale param here to set the different scale. 2 and 4 are the possible values. 2 Is default
+clip = RealESRGAN(clip, scale=2, fp16=False)
 clip = vs.core.resize.Bicubic(clip, format=vs.YUV420P8, matrix_s="709")
 clip.set_output()
