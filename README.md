@@ -15,7 +15,7 @@ docker build -t realsr_tensorrt:latest .
 # run with a mounted folder
 docker run --privileged --gpus all -it --rm -v /home/Desktop/tensorrt:/workspace/tensorrt realsr_tensorrt:latest
 # you can use it in various ways, ffmpeg example
-vspipe --y4m inference.py - | ffmpeg -i pipe: example.mkv
+vspipe -c y4m inference.py - | ffmpeg -i pipe: example.mkv
 ```
 Windows is mostly similar, but the path needs to be changed slightly:
 ```
